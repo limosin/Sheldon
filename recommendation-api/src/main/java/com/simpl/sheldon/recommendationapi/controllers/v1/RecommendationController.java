@@ -15,7 +15,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api/v1")
 public class RecommendationController {
@@ -30,6 +29,7 @@ public class RecommendationController {
 
     private static final Logger logger = LogManager.getLogger(RecommendationController.class);
 
+//    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping(path = "/recommendation", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<RecommendationResponse> getRecommendation(
             @Valid @NotBlank @RequestBody ComplRecommendRequest request,
