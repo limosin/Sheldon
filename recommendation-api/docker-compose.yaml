@@ -9,6 +9,6 @@ services:
     environment:
       POSTGRES_USER: postgress
       POSTGRES_PASSWORD: postgress
-      POSTGRES_DB: line_items
+      POSTGRES_DB: sheldon
     ports:
       - "5432:5432"

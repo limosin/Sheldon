@@ -11,6 +11,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,8 +30,9 @@ public class RecommendationController {
 
     private static final Logger logger = LogManager.getLogger(RecommendationController.class);
 
-//    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping(path = "/recommendation", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
     public ResponseEntity<RecommendationResponse> getRecommendation(
             @Valid @NotBlank @RequestBody ComplRecommendRequest request,
             @RequestHeader(value = "X-REQUEST-ID") String requestId)
@@ -43,7 +45,10 @@ public class RecommendationController {
             logger.error("Error while processing request: " + requestId, ex);
             throw ex;
         }
-        return ResponseEntity.ok(new RecommendationResponse(responseData));
+//        return ResponseEntity.ok(new RecommendationResponse(responseData));
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("access-control-allow-origin", "*");
+        return new ResponseEntity<>(new RecommendationResponse(responseData), headers, 200);
     }
 
     @PostMapping(path = "/recommendation/new", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -59,6 +64,8 @@ public class RecommendationController {
             logger.error("Error while processing request: " + requestId, ex);
             throw ex;
         }
-        return ResponseEntity.ok(new RecommendationResponse(responseData));
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("access-control-allow-origin", "*");
+        return new ResponseEntity<>(new RecommendationResponse(responseData), headers, 200);
     }
 }
