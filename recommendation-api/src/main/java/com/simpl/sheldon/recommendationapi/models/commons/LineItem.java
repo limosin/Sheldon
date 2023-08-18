@@ -21,10 +21,10 @@ public class LineItem {
     @JsonProperty("unit_price")
     private int unitPrice;
 
-    @JsonProperty("taxable")
+    @JsonProperty(value = "taxable", access = JsonProperty.Access.WRITE_ONLY)
     private Boolean taxable;
 
-    @JsonProperty("quantity")
+    @JsonProperty(value = "quantity", access = JsonProperty.Access.WRITE_ONLY)
     private int quantity;
 
     @JsonProperty("metadata")

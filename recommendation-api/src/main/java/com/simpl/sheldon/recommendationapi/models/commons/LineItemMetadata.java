@@ -11,13 +11,13 @@ import java.util.List;
 @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class LineItemMetadata {
-    @JsonProperty("category")
+    @JsonProperty(value = "category", access = JsonProperty.Access.WRITE_ONLY)
     private String category;
 
-    @JsonProperty("collections")
+    @JsonProperty(value = "collections", access = JsonProperty.Access.WRITE_ONLY)
     private List<String> collections;
 
-    @JsonProperty("compare_at_price")
+    @JsonProperty(value = "compare_at_price", access = JsonProperty.Access.WRITE_ONLY)
     private String compareAtPrice;
 
     @JsonProperty("image_url")
@@ -32,13 +32,13 @@ public class LineItemMetadata {
     @JsonProperty("product_url")
     private String productUrl;
 
-    @JsonProperty("sku")
+    @JsonProperty(value = "sku", access = JsonProperty.Access.WRITE_ONLY)
     private String sku;
 
-    @JsonProperty("tags")
+    @JsonProperty(value = "tags", access = JsonProperty.Access.WRITE_ONLY)
     private List<String> tags;
 
-    @JsonProperty("variant__id")
+    @JsonProperty("variant_id")
     private Long variant_Id;
 
     @JsonProperty("variant_options")
