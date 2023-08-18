@@ -1,0 +1,14 @@
+# Spin up containers for all the dependencies for running cod-service
+name: recommendation-api
+version: '2'
+services:
+  postgres:
+    platform: linux/arm64
+    image: postgres:latest
+    container_name: postgres-recommendation-api
+    environment:
+      POSTGRES_USER: postgress
+      POSTGRES_PASSWORD: postgress
+      POSTGRES_DB: line_items
+    ports:
+      - "5432:5432"
