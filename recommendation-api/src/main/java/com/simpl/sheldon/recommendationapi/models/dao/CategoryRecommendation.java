@@ -2,9 +2,12 @@ package com.simpl.sheldon.recommendationapi.models.dao;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = CategoryRecommendation.tableName)
+@Getter @Setter
 public class CategoryRecommendation {
     public static final String tableName = "product_recommendations";
     @Id
@@ -12,10 +15,10 @@ public class CategoryRecommendation {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "antecedent", columnDefinition = "json")
+    @Column(name = "antecedent")
     private String antecedent;
 
-    @Column(name = "consequent", columnDefinition = "json")
+    @Column(name = "consequent")
     private String consequent;
 
     @Column(name = "confidence")

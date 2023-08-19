@@ -11,7 +11,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,10 +18,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1")
 public class RecommendationController {
-
-    @Autowired
-    @Qualifier("mockedComplementaryRecommenderService")
-    private ComplRecommenderService mockedComplRecommenderService;
 
     @Autowired
     @Qualifier("complRecommenderServicev1")
@@ -38,7 +33,7 @@ public class RecommendationController {
         logger.info("Received Recommendation Request: " + requestId);
         RecommendationResponseData responseData = null;
         try {
-            responseData = mockedComplRecommenderService.getRecommendation(request);
+            responseData = complRecommenderServicev1.getRecommendation(request, requestId);
         } catch (Exception ex) {
             logger.error("Error while processing request: " + requestId, ex);
             throw ex;
@@ -46,15 +41,15 @@ public class RecommendationController {
         return new ResponseEntity<>(new RecommendationResponse(responseData), null, 200);
     }
 
-    @PostMapping(path = "/recommendation/new", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<RecommendationResponse> getRecommendationv2(
+    @PostMapping(path = "/recommendation/cross", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<RecommendationResponse> getRecommendationCross(
             @Valid @NotBlank @RequestBody ComplRecommendRequest request,
             @RequestHeader(value = "X-REQUEST-ID") String requestId)
     {
         logger.info("Received Recommendation Request: " + requestId);
         RecommendationResponseData responseData = null;
         try {
-            responseData = complRecommenderServicev1.getRecommendation(request);
+            responseData = complRecommenderServicev1.getRecommendation(request, requestId);
         } catch (Exception ex) {
             logger.error("Error while processing request: " + requestId, ex);
             throw ex;

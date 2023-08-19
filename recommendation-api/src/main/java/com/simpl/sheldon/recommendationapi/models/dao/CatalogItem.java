@@ -1,6 +1,9 @@
 package com.simpl.sheldon.recommendationapi.models.dao;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.util.UUID;
 
@@ -13,6 +16,8 @@ import java.util.UUID;
                         columnNames = "id")
         }
 )
+@ToString
+@Getter @Setter
 public class CatalogItem {
     public static final String tableName = "product_catalog";
 
@@ -27,10 +32,16 @@ public class CatalogItem {
     private String orderId;
 
     @Column(name = "merchant_id", nullable = false)
-    private UUID merchantId;
+    private String merchantId;
 
     @Column(name = "variant_id", length = 100)
-    private String variantId;
+    private Long variantId;
+
+    @Column(name = "title", length = 100)
+    private String title;
+
+    @Column(name = "description", length = 500)
+    private String description;
 
     @Column(name = "category", length = 100, columnDefinition = "varchar(100) default 'generic'")
     private String category;
@@ -41,8 +52,14 @@ public class CatalogItem {
     @Column(name = "gender", length = 100, columnDefinition = "varchar(100) default 'neutral'")
     private String gender;
 
-    @Column(name = "image_url", length = 100)
+    @Column(name = "image_url", length = 500)
     private String imageUrl;
+
+    @Column(name = "product_url", length = 500)
+    private String productUrl;
+
+    @Column(name = "category_color", length = 500)
+    private String categoryColor;
 
     @Column(name = "price", columnDefinition = "int default 100")
     private int price;
@@ -50,6 +67,9 @@ public class CatalogItem {
     @Column(name = "rating", columnDefinition = "int default 0")
     private int rating;
 
-    @Column(name = "variant_options", columnDefinition = "json")
+    @Column(name = "variant_options")
     private String variantOptions;
+
+    @Column(name = "metadata")
+    private String metadata;
 }
