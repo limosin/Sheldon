@@ -28,9 +28,6 @@ public class CatalogItem {
     @Column(name = "sku_id", length = 100)
     private String skuId;
 
-    @Column(name = "order_id", length = 100)
-    private String orderId;
-
     @Column(name = "merchant_id", nullable = false)
     private String merchantId;
 
@@ -61,11 +58,11 @@ public class CatalogItem {
     @Column(name = "category_color", length = 500)
     private String categoryColor;
 
-    @Column(name = "price", columnDefinition = "int default 100")
-    private int price;
+    @Column(name = "price", columnDefinition = "long default 100")
+    private Long price;
 
-    @Column(name = "rating", columnDefinition = "int default 0")
-    private int rating;
+    @Column(name = "rating", columnDefinition = "long default 0")
+    private Long rating;
 
     @Column(name = "variant_options")
     private String variantOptions;

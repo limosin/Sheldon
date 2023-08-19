@@ -11,9 +11,8 @@ import lombok.Setter;
 public class CategoryRecommendation {
     public static final String tableName = "product_recommendations";
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
+    @Column(name = "index", nullable = false)
+    private Long index;
 
     @Column(name = "antecedent")
     private String antecedent;

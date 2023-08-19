@@ -23,6 +23,10 @@ public class RecommendationController {
     @Qualifier("complRecommenderServicev1")
     private ComplRecommenderService complRecommenderServicev1;
 
+    @Autowired
+    @Qualifier("ComplRecommenderServiceCross")
+    private ComplRecommenderService complRecommenderServiceCross;
+
     private static final Logger logger = LogManager.getLogger(RecommendationController.class);
 
     @PostMapping(path = "/recommendation", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -49,7 +53,7 @@ public class RecommendationController {
         logger.info("Received Recommendation Request: " + requestId);
         RecommendationResponseData responseData = null;
         try {
-            responseData = complRecommenderServicev1.getRecommendation(request, requestId);
+            responseData = complRecommenderServiceCross.getRecommendation(request, requestId);
         } catch (Exception ex) {
             logger.error("Error while processing request: " + requestId, ex);
             throw ex;

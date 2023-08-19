@@ -16,7 +16,7 @@ public class LineItem {
     private String description;
 
     @JsonProperty("price")
-    private int price;
+    private long price;
 
     @JsonProperty("unit_price")
     private int unitPrice;
