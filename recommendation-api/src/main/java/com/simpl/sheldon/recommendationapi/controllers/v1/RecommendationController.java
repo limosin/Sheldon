@@ -30,9 +30,7 @@ public class RecommendationController {
 
     private static final Logger logger = LogManager.getLogger(RecommendationController.class);
 
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
-    @PostMapping(path = "/recommendation", produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
+    @PostMapping(path = "/recommendation", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<RecommendationResponse> getRecommendation(
             @Valid @NotBlank @RequestBody ComplRecommendRequest request,
             @RequestHeader(value = "X-REQUEST-ID") String requestId)
@@ -45,10 +43,7 @@ public class RecommendationController {
             logger.error("Error while processing request: " + requestId, ex);
             throw ex;
         }
-//        return ResponseEntity.ok(new RecommendationResponse(responseData));
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("access-control-allow-origin", "*");
-        return new ResponseEntity<>(new RecommendationResponse(responseData), headers, 200);
+        return new ResponseEntity<>(new RecommendationResponse(responseData), null, 200);
     }
 
     @PostMapping(path = "/recommendation/new", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -64,8 +59,6 @@ public class RecommendationController {
             logger.error("Error while processing request: " + requestId, ex);
             throw ex;
         }
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("access-control-allow-origin", "*");
-        return new ResponseEntity<>(new RecommendationResponse(responseData), headers, 200);
+        return new ResponseEntity<>(new RecommendationResponse(responseData), null, 200);
     }
 }

@@ -6,7 +6,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,5 +32,4 @@ public class BaseController {
     public ResponseEntity<Map<String, String>> healthCheck() {
         return new ResponseEntity<>(getDefaultResponse(), HttpStatus.OK);
     }
-
 }
