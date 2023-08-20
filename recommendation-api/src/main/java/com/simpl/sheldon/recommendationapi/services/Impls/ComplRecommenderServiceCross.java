@@ -35,36 +35,33 @@ public class ComplRecommenderServiceCross implements ComplRecommenderService {
         String merchantId = "9204a81b-efbf-473d-a593-27d6df307ce8";
 //        List<Long> variantIds = ComplRecommenderServiceCross.getVariantId(request, requestId);
         List<Long> variantIds = List.of(40710975291435L);
-        List<String> antecedents = new ArrayList<>();
-        for(Long varId: variantIds) {
-            logger.info("Merchant ID: {}, Variant ID: {}", merchantId, varId);
-            List<CatalogItem> catalogItem = catalogRepository.findAllByMerchantIdAndVariantId(merchantId, varId);
-            logger.info("Catalog Item: {}", catalogItem);
-            if(catalogItem.size() > 0) {
-                antecedents.add(catalogItem.get(0).getCategoryColor());
-            }
+        RecommendationResponseData recommendationResponseData = new RecommendationResponseData();
+        recommendationResponseData.setOriginalItems(request.getLineItems());
+        CatalogItem catalogItem = catalogRepository.findFirstByMerchantIdAndVariantId(merchantId, variantIds.get(0));
+        if (catalogItem == null) {
+            recommendationResponseData.setRecommendedItems(new ArrayList<>());
+            return recommendationResponseData;
         }
-        if (antecedents.size() == 0) {
-            return new RecommendationResponseData();
-        }
-        List<CategoryRecommendation> consequents = categoryRecommendationRepository.findAllByAntecedent(antecedents.get(0));
+        logger.info("Catalog Item: {}", catalogItem);
+        List<CategoryRecommendation> consequents = categoryRecommendationRepository.findAllByAntecedentOrderByConfidenceDesc(catalogItem.getCategoryColor());
         if (consequents.size() == 0) {
-            return new RecommendationResponseData();
+            recommendationResponseData.setRecommendedItems(new ArrayList<>());
+            return recommendationResponseData;
         }
         logger.info("Consequents: {}", consequents);
         List<CatalogItem> recommendedItems = new ArrayList<>();
         for (CategoryRecommendation consequent: consequents) {
-            List<CatalogItem> items = catalogRepository.getByMerchantIdAndCategoryColor(merchantId, consequent.getConsequent());
+            List<CatalogItem> items = catalogRepository.findFirst500ByMerchantIdAndCategoryColor(merchantId, consequent.getConsequent());
             recommendedItems.addAll(items);
         }
-        List<CatalogItem> filteredItems = this.getFilteredRecommendations(recommendedItems);
+        logger.info("Recommended Items Count: {}", recommendedItems.size());
+        List<CatalogItem> filteredItems = this.getFilteredRecommendations(recommendedItems, catalogItem);
         List<LineItem> lineItems = filteredItems.stream().map(CatalogToLineItem::mapCatalogToLineItem).toList();
-        RecommendationResponseData recommendationResponseData = new RecommendationResponseData();
         recommendationResponseData.setRecommendedItems(lineItems);
         return recommendationResponseData;
     }
 
-    private List<CatalogItem> getFilteredRecommendations(List<CatalogItem> recommendedItems) {
+    private List<CatalogItem> getFilteredRecommendations(List<CatalogItem> recommendedItems, CatalogItem catalogItem) {
         // Get only first 10 items
         if (recommendedItems.size() > 10) {
             return recommendedItems.subList(0, 10);

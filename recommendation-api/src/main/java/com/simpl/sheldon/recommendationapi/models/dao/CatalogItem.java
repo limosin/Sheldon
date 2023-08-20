@@ -69,4 +69,7 @@ public class CatalogItem {
 
     @Column(name = "metadata")
     private String metadata;
+
+    @Transient
+    public int score;
 }

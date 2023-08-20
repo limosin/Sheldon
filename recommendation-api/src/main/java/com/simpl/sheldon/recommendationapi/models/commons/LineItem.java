@@ -19,7 +19,7 @@ public class LineItem {
     private long price;
 
     @JsonProperty("unit_price")
-    private int unitPrice;
+    private long unitPrice;
 
     @JsonProperty(value = "taxable", access = JsonProperty.Access.WRITE_ONLY)
     private Boolean taxable;

@@ -12,4 +12,7 @@ import java.util.List;
 public class RecommendationResponseData {
     @JsonProperty("recommended_items")
     private List<LineItem> recommendedItems;
+
+    @JsonProperty("original_items")
+    private List<LineItem> originalItems;
 }

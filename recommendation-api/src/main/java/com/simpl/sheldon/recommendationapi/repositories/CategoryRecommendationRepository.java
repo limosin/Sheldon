@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface CategoryRecommendationRepository extends JpaRepository<CategoryRecommendation, Long> {
-    List<CategoryRecommendation> findAllByAntecedent(String antecedent);
+    List<CategoryRecommendation> findAllByAntecedentOrderByConfidenceDesc(String antecedent);
 }

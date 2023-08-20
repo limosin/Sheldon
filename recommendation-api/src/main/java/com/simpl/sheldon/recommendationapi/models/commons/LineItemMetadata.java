@@ -46,4 +46,7 @@ public class LineItemMetadata {
 
     @JsonProperty("vendor")
     private String vendor;
+
+    @JsonProperty(value = "gender", access = JsonProperty.Access.READ_ONLY)
+    private String gender;
 }

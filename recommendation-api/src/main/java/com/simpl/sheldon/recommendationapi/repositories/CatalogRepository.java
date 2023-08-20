@@ -9,7 +9,9 @@ import java.util.List;
 @Repository
 public interface CatalogRepository extends JpaRepository<CatalogItem, String> {
 
-    List<CatalogItem> findAllByMerchantIdAndVariantId(String merchantId, Long variantId);
+    CatalogItem findFirstByMerchantIdAndVariantId(String merchantId, Long variantId);
 
-    List<CatalogItem> getByMerchantIdAndCategoryColor(String merchantId, String category);
+    List<CatalogItem> findFirst10ByMerchantIdAndVariantId(String merchantId, Long variantId);
+
+    List<CatalogItem> findFirst500ByMerchantIdAndCategoryColor(String merchantId, String category);
 }

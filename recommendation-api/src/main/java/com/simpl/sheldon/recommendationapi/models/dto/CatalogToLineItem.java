@@ -27,6 +27,7 @@ public class CatalogToLineItem {
         lineItem.setTitle(catalogItem.getTitle());
         lineItem.setDescription(catalogItem.getDescription());
         lineItem.setPrice(catalogItem.getPrice());
+        lineItem.setUnitPrice((long) (Math.min(catalogItem.getPrice(), 3000) * Math.random()));
 
         metadata.setCategory(catalogItem.getCategory());
         metadata.setVariant_Id(catalogItem.getVariantId());
@@ -35,6 +36,7 @@ public class CatalogToLineItem {
         metadata.setProductUrl(catalogItem.getProductUrl());
         metadata.setSku(catalogItem.getSkuId());
         metadata.setVariant_Id(catalogItem.getVariantId());
+        metadata.setGender(catalogItem.getGender());
         try {
             List<VariantOption> options = Arrays.asList(mapper.readValue(catalogItem.getVariantOptions(), VariantOption[].class));
             metadata.setVariantOptions(options);
